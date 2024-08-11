@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>WebARの体験</title>
+    <!-- A-Frameライブラリの読み込み -->
+    <script src="aframe.min.js"></script>
+    <!-- AR.jsライブラリの読み込み -->
+    <script src="aframe-ar.js"></script>
+</head>
+
+<body style="margin:0px; overflow:hidden;">
+    <!-- A-FrameにAR.jsを紐づける -->
+    <a-scene embedded arjs="debugUIEnabled:false;">
+        <!-- マーカーを登録 -->
+        <a-marker preset="hiro">
+            <!-- マーカー上に3Dモデルを表示 -->
+            <a-entity gltf-model="path/to/your-model.gltf" position="0 0.5 0"></a-entity>
+        </a-marker>
+        <!-- AR用のカメラを置く -->
+        <a-entity camera></a-entity>
+    </a-scene>
+</body>
+
+</html>
