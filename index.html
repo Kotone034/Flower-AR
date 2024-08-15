@@ -13,17 +13,17 @@
 
 <body style="margin:0px; overflow:hidden;">
     <!-- A-FrameにAR.jsを紐づける -->
-    <a-scene embedded arjs="debugUIEnabled:false;">
+    <a-scene embedded arjs="debugUIEnabled:false; sourceType: webcam;"></a-scene>
 
-        <!-- マーカーを登録 -->
-        <a-marker type="pattern" url="pattern-AR.patt">
-            <!-- マーカー上に3Dモデルを表示 -->
-            <a-entity gltf-model="flower.glb" position="0 0.5 0"></a-entity>
+    <!-- マーカーを登録 -->
+    <a-marker type="pattern" url="pattern-AR.patt">
+        <!-- マーカー上に3Dモデルを表示 -->
+        <a-entity gltf-model="flower.glb" position="0 0.5 0"></a-entity>
 
-        </a-marker>
+    </a-marker>
 
-        <!-- AR用のカメラを置く -->
-        <a-entity camera></a-entity>
+    <!-- AR用のカメラを置く -->
+    <a-entity camera></a-entity>
     </a-scene>
 </body>
 
