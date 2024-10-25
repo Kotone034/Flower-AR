@@ -31,8 +31,8 @@
             left: 50%;
             transform: translateX(-50%);
             width: 80%;
-            z-index: 1001; /* Figmaボタンより前面に表示 */
-            background-color: white; /* 背景色で目立たせる */
+            z-index: 1001;
+            background-color: white;
         }
     </style>
 </head>
@@ -66,6 +66,21 @@
             const scaleValue = scaleSlider.value;
             flowerModel.setAttribute('scale', `${scaleValue} ${scaleValue} ${scaleValue}`);
         });
+
+        // 自動回転アニメーション
+        function rotateModel() {
+            // 現在の回転角度を取得
+            const rotation = flowerModel.getAttribute('rotation');
+            // Y軸回転角度を増加
+            rotation.y += 1;  // 回転速度を変更する場合、この値を調整
+            // 回転属性を更新
+            flowerModel.setAttribute('rotation', rotation);
+            // 次のフレームで再度呼び出し
+            requestAnimationFrame(rotateModel);
+        }
+
+        // 回転アニメーションを開始
+        rotateModel();
     </script>
 </body>
 
