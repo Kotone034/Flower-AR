@@ -5,83 +5,67 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>EllaFleur</title>
-    <!-- A-Frameライブラリの読み込み -->
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <!-- AR.jsライブラリの読み込み -->
     <script src="https://raw.githack.com/AR-js-org/AR.js/3.3.0/aframe/build/aframe-ar.js"></script>
-    <!-- Three.jsライブラリの読み込み -->
     <script src="https://cdn.jsdelivr.net/npm/three@0.167.0/build/three.min.js"></script>
     <style>
-        /* ボタンのスタイル */
         #figmaButton {
             position: absolute;
             top: 10px;
             right: 10px;
-            background-color: #e76c9d; /* ボタンの背景色 */
-            color: white; /* テキストの色 */
-            padding: 15px 32px; /* パディング */
-            text-align: center; /* テキストの位置 */
-            text-decoration: none; /* テキストの装飾 */
-            display: inline-block; /* インラインブロック */
-            font-size: 16px; /* フォントサイズ */
-            margin: 4px 2px; /* マージン */
-            cursor: pointer; /* カーソル */
-            border-radius: 4px; /* 角の丸み */
-            z-index: 1000; /* ボタンを前面に表示 */
+            background-color: #e76c9d;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            z-index: 1000;
+        }
+
+        #scaleSlider {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            z-index: 1001; /* Figmaボタンより前面に表示 */
+            background-color: white; /* 背景色で目立たせる */
         }
     </style>
 </head>
 
 <body style="margin:0px; overflow:hidden;">
-    <!-- A-FrameにAR.jsを紐づける -->
     <a-scene embedded arjs="debugUIEnabled:false; sourceType: webcam;">
-
         <!-- マーカーを登録 -->
         <a-marker type="pattern" url="pattern-ARmarker.patt">
-            <!-- マーカー上に3Dモデルを表示 -->
-            <a-entity gltf-model="flower.glb" position="0 0.5 0" rotation="0 0 0"></a-entity>
+            <!-- 3Dモデルの表示 -->
+            <a-entity id="flowerModel" gltf-model="flower.glb" position="0 0.5 0" rotation="0 0 0" scale="0.1 0.1 0.1"></a-entity>
         </a-marker>
-
-        <!-- AR用のカメラを置く -->
         <a-entity camera></a-entity>
     </a-scene>
 
-    <!-- Figmaへのリンクボタンを追加 -->
+    <!-- Figmaへのリンクボタン -->
     <button id="figmaButton">Figmaに移動</button>
 
-    <!-- Three.jsによる3Dオブジェクト表示 -->
+    <!-- スライダーを追加してサイズを調整 -->
+    <input type="range" id="scaleSlider" min="0.1" max="2" step="0.1" value="0.5">
+
     <script>
-        // ボタンがクリックされたときにFigmaのURLに移動
         document.getElementById('figmaButton').onclick = function() {
-            window.location.href = 'https://www.figma.com/proto/TkRW0PH895YLA1o1MiRYPR/EllaFlure?node-id=0-1&node-type=CANVAS&viewport=-43%2C-35%2C0.37&t=sNXVLEnuikhjQF96-0&scaling=scale-down&content-scaling=fixed&starting-point-node-id=12%3A339&show-proto-sidebar=1'; // FigmaのURLを指定
+            window.location.href = 'https://www.figma.com/proto/TkRW0PH895YLA1o1MiRYPR/EllaFlure?node-id=0-1&node-type=CANVAS&viewport=-43%2C-35%2C0.37&t=sNXVLEnuikhjQF96-0&scaling=scale-down&content-scaling=fixed&starting-point-node-id=12%3A339&show-proto-sidebar=1';
         };
 
-        // Three.jsを使った3Dオブジェクトの追加
-        var scene = new THREE.Scene();
-        var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        var renderer = new THREE.WebGLRenderer();
+        // スライダーでサイズを調整
+        const scaleSlider = document.getElementById('scaleSlider');
+        const flowerModel = document.getElementById('flowerModel');
 
-        // Three.jsのレンダラーの設定
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        document.body.appendChild(renderer.domElement);
-
-        // 立方体オブジェクトを追加
-        var geometry = new THREE.BoxGeometry();
-        var material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-        var cube = new THREE.Mesh(geometry, material);
-        scene.add(cube);
-
-        camera.position.z = 5;
-
-        // アニメーション関数
-        var animate = function() {
-            requestAnimationFrame(animate);
-            cube.rotation.x += 0.01;
-            cube.rotation.y += 0.01;
-            renderer.render(scene, camera);
-        };
-
-        animate();
+        scaleSlider.addEventListener('input', function() {
+            const scaleValue = scaleSlider.value;
+            flowerModel.setAttribute('scale', `${scaleValue} ${scaleValue} ${scaleValue}`);
+        });
     </script>
 </body>
 
