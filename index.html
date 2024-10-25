@@ -42,13 +42,31 @@
         <!-- マーカーを登録 -->
         <a-marker type="pattern" url="pattern-AR-marker.patt">
             <!-- 3Dモデルの表示 -->
-            <a-entity id="flowerModel" gltf-model="flower.glb" position="0 0.5 0" rotation="0 0 0" scale="0.01 0.01 0.01"></a-entity>
+            <a-entity id="flowerModel" gltf-model="flower.glb" position="0 0.5 0" rotation="0 0 0" scale="0.05 0.05 0.05"></a-entity>
         </a-marker>
         <a-entity camera></a-entity>
     </a-scene>
 
     <!-- Figmaへのリンクボタン -->
     <button id="figmaButton">Figmaに移動</button>
+
+    <!-- スライダーを追加してサイズを調整 -->
+    <input type="range" id="scaleSlider" min="0.1" max="2" step="0.1" value="0.5">
+
+    <script>
+        document.getElementById('figmaButton').onclick = function() {
+            window.location.href = 'https://www.figma.com/proto/TkRW0PH895YLA1o1MiRYPR/EllaFlure?node-id=0-1&node-type=CANVAS&viewport=-43%2C-35%2C0.37&t=sNXVLEnuikhjQF96-0&scaling=scale-down&content-scaling=fixed&starting-point-node-id=12%3A339&show-proto-sidebar=1';
+        };
+
+        // スライダーでサイズを調整
+        const scaleSlider = document.getElementById('scaleSlider');
+        const flowerModel = document.getElementById('flowerModel');
+
+        scaleSlider.addEventListener('input', function() {
+            const scaleValue = scaleSlider.value;
+            flowerModel.setAttribute('scale', `${scaleValue} ${scaleValue} ${scaleValue}`);
+        });
+    </script>
 </body>
 
 </html>
